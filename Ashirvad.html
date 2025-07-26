@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aashirvad Resort - Investor Pitch</title>
+<!-- Chosen Palette: Warm Neutrals (Beige, Soft Brown, Deep Green Accent) -->
+<!-- Application Structure Plan: A single-page, dashboard-style application. The structure guides the user from the high-level vision and team credibility to an interactive financial modeling section. A key feature is an occupancy slider that allows investors to dynamically explore financial scenarios in real-time, viewing updated KPIs, charts, and tables. This interactive approach is more engaging and persuasive than a static presentation, providing transparency and demonstrating a strong command of the business financials. -->
+<!-- Visualization & Content Choices: Report Info -> Financial Projections. Goal -> Allow "what-if" analysis. Viz -> HTML range slider, Chart.js donut chart (Revenue Mix), Chart.js bar chart (Profit Comparison), and dynamic KPI cards. Interaction -> Moving the slider updates all financial visuals and text instantly. Justification -> This empowers investors to see the direct impact of occupancy changes on revenue and profit, building confidence. Library -> Chart.js on Canvas. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body {
+font-family: 'Inter', sans-serif;
+background-color: #FDFBF8;
+color: #3D405B;
+}
+.chart-container {
+position: relative;
+width: 100%;
+max-width: 400px;
+margin-left: auto;
+margin-right: auto;
+height: 300px;
+max-height: 350px;
+}
+@media (min-width: 768px) {
+.chart-container {
+height: 350px;
+}
+}
+.nav-link {
+transition: color 0.3s;
+}
+.nav-link:hover {
+color: #81B29A;
+}
+.kpi-card {
+background-color: #ffffff;
+border: 1px solid #E0E0E0;
+border-radius: 0.75rem;
+padding: 1.5rem;
+text-align: center;
+box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+}
+.slider::-webkit-slider-thumb {
+-webkit-appearance: none;
+appearance: none;
+width: 24px;
+height: 24px;
+background: #3D405B;
+cursor: pointer;
+border-radius: 50%;
+}
+.slider::-moz-range-thumb {
+width: 24px;
+height: 24px;
+background: #3D405B;
+cursor: pointer;
+border-radius: 50%;
+}
+.highlight-section {
+background-color: #F4F1DE;
+}
+</style>
+</head>
+<body class="antialiased">
+
+<header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-200">
+<nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+<h1 class="text-2xl font-bold text-gray-800">Aashirvad Resort</h1>
+<div class="hidden md:flex space-x-8">
+<a href="#opportunity" class="nav-link text-gray-600">The Opportunity</a>
+<a href="#team" class="nav-link text-gray-600">Our Team</a>
+<a href="#financials" class="nav-link text-gray-600">Financials</a>
+<a href="#valuation" class="nav-link text-gray-600">Valuation</a>
+<a href="#contact" class="nav-link text-gray-600">Contact</a>
+</div>
+</nav>
+</header>
+
+<main>
+<section id="hero" class="py-20 md:py-32 text-center bg-white">
+<div class="container mx-auto px-6">
+<h2 class="text-4xl md:text-6xl font-bold text-gray-800 leading-tight">Invest in Wayanad's Premier Hospitality Experience</h2>
+<p class="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">Join us in shaping the future of luxury tourism with Aashirvad Resort, a high-growth venture with a clear path to profitability and significant investor returns.</p>
+<a href="#financials" class="mt-8 inline-block bg-gray-800 text-white font-bold rounded-lg px-8 py-3 transition duration-300 hover:bg-gray-700">Explore the Financials</a>
+</div>
+</section>
+
+<section id="opportunity" class="py-16 md:py-24 highlight-section">
+<div class="container mx-auto px-6">
+<div class="text-center mb-12">
+<h3 class="text-3xl md:text-4xl font-bold text-gray-800">The Opportunity: Why Aashirvad?</h3>
+<p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Aashirvad Resort is strategically positioned to capture the high-end tourism market in Wayanad. This section outlines our unique value proposition and the solid foundation upon which this venture is built.</p>
+</div>
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="bg-white p-6 rounded-lg shadow-sm">
+<h4 class="font-bold text-xl mb-2">Prime Location & Architecture</h4>
+<p class="text-gray-600">Nestled in a prime Wayanad location, the resort boasts beautiful architecture, making it a highly desirable destination.</p>
+</div>
+<div class="bg-white p-6 rounded-lg shadow-sm">
+<h4 class="font-bold text-xl mb-2">Diverse Revenue Streams</h4>
+<p class="text-gray-600">Profitability is driven by multiple channels: 39 premium rooms, a full-service spa, a destination café, and versatile event spaces.</p>
+</div>
+<div class="bg-white p-6 rounded-lg shadow-sm">
+<h4 class="font-bold text-xl mb-2">Premium Hospitality Model</h4>
+<p class="text-gray-600">Our high-margin, low-volume model ensures higher satisfaction, less operational wear, and greater brand equity, reducing dependency on OTAs.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="team" class="py-16 md:py-24 bg-white">
+<div class="container mx-auto px-6">
+<div class="text-center mb-12">
+<h3 class="text-3xl md:text-4xl font-bold text-gray-800">Visionary Leadership & Proven Success</h3>
+<p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Our team combines deep hospitality expertise with a proven track record of scaling ventures and delivering exceptional results. This is the leadership that will drive Aashirvad's success.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+<div class="kpi-card">
+<h4 class="font-bold text-xl">Mubarak Rahman</h4>
+<p class="text-sm text-gray-500 mb-2">People & Marketing</p>
+<p class="text-gray-600">5+ yrs in hospitality, generates 300+ daily leads via a 200+ agent network.</p>
+</div>
+<div class="kpi-card">
+<h4 class="font-bold text-xl">Shinas K</h4>
+<p class="text-sm text-gray-500 mb-2">Strategy & Operations</p>
+<p class="text-gray-600">Meta Ad expert, uses AI & automation to drive performance marketing.</p>
+</div>
+<div class="kpi-card">
+<h4 class="font-bold text-xl">Salam Fossil</h4>
+<p class="text-sm text-gray-500 mb-2">Mentor & Investor</p>
+<p class="text-gray-600">Key investor in Aashirvad Resorts and the successful Fossil Resort.</p>
+</div>
+<div class="kpi-card">
+<h4 class="font-bold text-xl">Peter</h4>
+<p class="text-sm text-gray-500 mb-2">Mentor & MD</p>
+<p class="text-gray-600">Major investor and Managing Director of Aashirvad Resort.</p>
+</div>
+</div>
+<div class="mt-12 text-center bg-gray-50 p-6 rounded-lg">
+<h4 class="font-bold text-2xl text-gray-800">Proven Track Record: Zeno Village</h4>
+<p class="text-lg text-gray-600 mt-2">Our team scaled Zeno Village from <span class="font-bold">₹4L to ₹38-50L/month</span> in just 5 years, demonstrating our capability to execute and grow.</p>
+</div>
+</div>
+</section>
+
+<section id="financials" class="py-16 md:py-24 highlight-section">
+<div class="container mx-auto px-6">
+<div class="text-center mb-12">
+<h3 class="text-3xl md:text-4xl font-bold text-gray-800">Interactive Financial Projections</h3>
+<p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Explore the financial potential of Aashirvad Resort. Use the slider below to adjust the monthly occupancy rate and see how it impacts revenue, profit, and other key metrics in real-time. This model is based on our 39-room inventory and diversified revenue streams.</p>
+</div>
+
+<div class="bg-white p-6 md:p-8 rounded-xl shadow-lg">
+<div class="mb-8">
+<label for="occupancy-slider" class="block text-lg font-medium text-gray-700">Monthly Occupancy Rate: <span id="occupancy-label" class="font-bold text-2xl text-gray-900">70%</span></label>
+<input id="occupancy-slider" type="range" min="30" max="100" value="70" step="10" class="slider w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer mt-2">
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<div class="kpi-card">
+<h4 class="text-gray-500 font-medium">Total Monthly Revenue</h4>
+<p id="kpi-total-revenue" class="text-3xl font-bold text-gray-800 mt-2">₹1.55 Cr</p>
+</div>
+<div class="kpi-card">
+<h4 class="text-gray-500 font-medium">Total Monthly Profit</h4>
+<p id="kpi-total-profit" class="text-3xl font-bold text-gray-800 mt-2">₹1.01 Cr</p>
+</div>
+<div class="kpi-card">
+<h4 class="text-gray-500 font-medium">Rooms Sold / Month</h4>
+<p id="kpi-rooms-sold" class="text-3xl font-bold text-gray-800 mt-2">819</p>
+</div>
+<div class="kpi-card bg-green-50 border-green-200">
+<h4 class="text-green-600 font-medium">Annual Profit</h4>
+<p id="kpi-annual-profit" class="text-3xl font-bold text-green-700 mt-2">₹12.14 Cr</p>
+</div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10">
+<div>
+<h4 class="text-xl font-bold text-center mb-4">Revenue Mix</h4>
+<div class="chart-container">
+<canvas id="revenueChart"></canvas>
+</div>
+</div>
+<div>
+<h4 class="text-xl font-bold text-center mb-4">Profit Contribution</h4>
+<div class="chart-container">
+<canvas id="profitChart"></canvas>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="valuation" class="py-16 md:py-24 bg-white">
+<div class="container mx-auto px-6 text-center">
+<h3 class="text-3xl md:text-4xl font-bold text-gray-800">Future Growth & Valuation</h3>
+<p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Our strategy extends beyond a single property, with a clear pipeline for future growth that enhances long-term investor value. The success of Aashirvad sets the stage for a powerful, high-return portfolio.</p>
+
+<div class="grid md:grid-cols-2 gap-8 mt-12">
+<div class="bg-gray-50 p-8 rounded-lg text-left">
+<h4 class="font-bold text-2xl text-gray-800 mb-4">Upcoming Projects</h4>
+<ul class="space-y-3 text-gray-600">
+<li class="flex items-start"><span class="font-bold text-green-600 mr-2">✓</span><div><span class="font-semibold">Idanazhi, Kuttipuram:</span> Heritage & Wellness focus, launching Mar 2026.</div></li>
+<li class="flex items-start"><span class="font-bold text-green-600 mr-2">✓</span><div><span class="font-semibold">Hayah, Wayanad:</span> Targeting HNWI couples, launching Q4 2027.</div></li>
+<li class="flex items-start"><span class="font-bold text-green-600 mr-2">✓</span><div><span class="font-semibold">Ras Al Khaimah, UAE:</span> Urban weekend retreat, build starts Sept 2025.</div></li>
+</ul>
+</div>
+<div class="highlight-section p-8 rounded-lg">
+<h4 class="font-bold text-2xl text-gray-800">Significant Valuation Potential</h4>
+<p class="mt-4 text-lg text-gray-700">With a projected annual profit of <strong class="text-gray-900">₹12.14 Crores</strong> at a conservative 70% occupancy...</p>
+<p class="mt-4 text-gray-700 text-lg">The property valuation is estimated to be <strong class="text-gray-900">10-15 times</strong> the annual profit.</p>
+<div class="mt-6 bg-white p-6 rounded-lg shadow-inner">
+<p class="text-3xl md:text-4xl font-bold text-green-700">₹121.4 Cr - ₹182.1 Cr</p>
+<p class="text-sm font-medium text-green-600 mt-1">Potential Property Valuation</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<footer id="contact" class="bg-gray-800 text-white">
+<div class="container mx-auto px-6 py-12 text-center">
+<h3 class="text-3xl font-bold">Join Us in Building Wayanad's Premier Resort</h3>
+<p class="mt-4 max-w-2xl mx-auto">This is more than an investment in a property; it's a partnership in a vision for premium hospitality. Contact us to learn more and become part of our success story.</p>
+<div class="mt-8 flex justify-center gap-8">
+<div>
+<p class="font-bold">Mubarak Rahman</p>
+<p class="text-gray-400">People & Marketing</p>
+<p class="text-gray-300">+91 9633 80 90 71</p>
+</div>
+<div>
+<p class="font-bold">Shinas K</p>
+<p class="text-gray-400">Strategy & Operations</p>
+<p class="text-gray-300">+91 9539 70 71 85</p>
+</div>
+</div>
+</div>
+</footer>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+const financialData = {
+'30': { roomsSold: 351, roomRevenue: 45.99, nonRoomRevenue: 29.04, roomProfit: 18.23, nonRoomProfit: 17.42 },
+'40': { roomsSold: 468, roomRevenue: 61.32, nonRoomRevenue: 33.72, roomProfit: 31.80, nonRoomProfit: 20.23 },
+'50': { roomsSold: 585, roomRevenue: 76.65, nonRoomRevenue: 38.40, roomProfit: 45.37, nonRoomProfit: 23.04 },
+'60': { roomsSold: 702, roomRevenue: 91.98, nonRoomRevenue: 43.08, roomProfit: 58.95, nonRoomProfit: 25.85 },
+'70': { roomsSold: 819, roomRevenue: 107.31, nonRoomRevenue: 47.76, roomProfit: 72.52, nonRoomProfit: 28.66 },
+'80': { roomsSold: 936, roomRevenue: 122.64, nonRoomRevenue: 52.44, roomProfit: 86.09, nonRoomProfit: 31.46 },
+'90': { roomsSold: 1053, roomRevenue: 137.97, nonRoomRevenue: 57.12, roomProfit: 99.67, nonRoomProfit: 34.27 },
+'100': { roomsSold: 1170, roomRevenue: 153.30, nonRoomRevenue: 61.80, roomProfit: 113.25, nonRoomProfit: 37.08 },
+};
+
+const slider = document.getElementById('occupancy-slider');
+const occupancyLabel = document.getElementById('occupancy-label');
+
+const kpiTotalRevenue = document.getElementById('kpi-total-revenue');
+const kpiTotalProfit = document.getElementById('kpi-total-profit');
+const kpiRoomsSold = document.getElementById('kpi-rooms-sold');
+const kpiAnnualProfit = document.getElementById('kpi-annual-profit');
+
+const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+const profitCtx = document.getElementById('profitChart').getContext('2d');
+
+let revenueChart, profitChart;
+
+function formatCurrency(lakhs) {
+if (lakhs >= 100) {
+return `₹${(lakhs / 100).toFixed(2)} Cr`;
+}
+return `₹${lakhs.toFixed(2)} L`;
+}
+
+function createCharts() {
+revenueChart = new Chart(revenueCtx, {
+type: 'doughnut',
+data: {
+labels: ['Room Revenue', 'Non-Room Revenue'],
+datasets: [{
+data: [107.31, 47.76],
+backgroundColor: ['#3D405B', '#81B29A'],
+borderColor: '#FDFBF8',
+borderWidth: 4,
+}]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+cutout: '60%',
+plugins: {
+legend: {
+position: 'bottom',
+},
+}
+}
+});
+
+profitChart = new Chart(profitCtx, {
+type: 'bar',
+data: {
+labels: ['Profit Source'],
+datasets: [
+{
+label: 'Room Profit',
+data: [72.52],
+backgroundColor: '#3D405B',
+},
+{
+label: 'Non-Room Profit',
+data: [28.66],
+backgroundColor: '#81B29A',
+}
+]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+scales: {
+y: {
+beginAtZero: true,
+title: {
+display: true,
+text: 'Profit (in Lakhs ₹)'
+}
+}
+},
+plugins: {
+legend: {
+position: 'bottom',
+},
+}
+}
+});
+}
+
+function updateDashboard(occupancy) {
+const data = financialData[occupancy];
+if (!data) return;
+
+const totalRevenue = data.roomRevenue + data.nonRoomRevenue;
+const totalProfit = data.roomProfit + data.nonRoomProfit;
+const annualProfit = totalProfit * 12;
+
+occupancyLabel.textContent = `${occupancy}%`;
+kpiTotalRevenue.textContent = formatCurrency(totalRevenue);
+kpiTotalProfit.textContent = formatCurrency(totalProfit);
+kpiRoomsSold.textContent = data.roomsSold;
+kpiAnnualProfit.textContent = formatCurrency(annualProfit);
+
+revenueChart.data.datasets[0].data = [data.roomRevenue, data.nonRoomRevenue];
+revenueChart.update();
+
+profitChart.data.datasets[0].data = [data.roomProfit];
+profitChart.data.datasets[1].data = [data.nonRoomProfit];
+profitChart.update();
+}
+
+slider.addEventListener('input', (e) => {
+updateDashboard(e.target.value);
+});
+
+createCharts();
+updateDashboard('70');
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+anchor.addEventListener('click', function (e) {
+e.preventDefault();
+document.querySelector(this.getAttribute('href')).scrollIntoView({
+behavior: 'smooth'
+});
+});
+});
+});
+</script>
+</body>
+</html>
